@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Usuários</h2>
+<ul>
+    {% for usuario in usuarios %}
+        <li>{{ usuario.nome }} - {{ usuario.email }}</li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('cadastrar_usuario') }}">Cadastrar novo</a>
+{% endblock %}
