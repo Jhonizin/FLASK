@@ -11,33 +11,28 @@ class Usuario(db.Model):
 class Categoria(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
+    produtos = db.relationship('Produto', backref='categoria', lazy=True)
 
 class Produto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     preco = db.Column(db.Float, nullable=False)
-    categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'))
-    categoria = db.relationship('Categoria', backref='produtos')
+    categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=False)
 
 class Pedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
-    usuario = db.relationship('Usuario', backref='pedidos')
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    itens = db.relationship('ItemPedido', backref='pedido', lazy=True)
 
 class ItemPedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    pedido_id = db.Column(db.Integer, db.ForeignKey('pedido.id'))
-    produto_id = db.Column(db.Integer, db.ForeignKey('produto.id'))
+    pedido_id = db.Column(db.Integer, db.ForeignKey('pedido.id'), nullable=False)
+    produto_id = db.Column(db.Integer, db.ForeignKey('produto.id'), nullable=False)
     quantidade = db.Column(db.Integer, nullable=False)
-
-    pedido = db.relationship('Pedido', backref='itens')
-    produto = db.relationship('Produto', backref='itens')
 
 class Pergunta(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
-    produto_id = db.Column(db.Integer, db.ForeignKey('produto.id'))
-    texto = db.Column(db.String(300), nullable=False)
-
-    usuario = db.relationship('Usuario', backref='perguntas')
-    produto = db.relationship('Produto', backref='perguntas')
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    produto_id = db.Column(db.Integer, db.ForeignKey('produto.id'), nullable=False)
+    pergunta = db.Column(db.Text, nullable=False)
+    resposta = db.Column(db.Text)

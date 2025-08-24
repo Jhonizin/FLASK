@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Vendas{% endblock %}
+{% block content %}
+<h2>Vendas</h2>
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Produto</th>
+            <th>Comprador</th>
+            <th>Preço</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for venda in vendas %}
+        <tr>
+            <td>{{ venda.id }}</td>
+            <td>{{ venda.produto.nome }}</td>
+            <td>{{ venda.usuario.nome }}</td>
+            <td>R$ {{ venda.produto.preco }}</td>
+            <td>{{ venda.data }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

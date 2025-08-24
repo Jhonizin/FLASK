@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Favoritos{% endblock %}
+{% block content %}
+<h2>Favoritos</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for produto in favoritos %}
+    <div class="col">
+        <div class="card h-100">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="card-img-top" alt="{{ produto.nome }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ produto.nome }}</h5>
+                <p class="card-text">R$ {{ produto.preco }}</p>
+                <p class="card-text"><small>Categoria: {{ produto.categoria.nome }}</small></p>
+                <a href="{{ url_for('comprar_produto', id=produto.id) }}" class="btn btn-primary btn-sm">Comprar</a>
+                <a href="{{ url_for('remover_favorito', id=produto.id) }}" class="btn btn-danger btn-sm">Remover</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
